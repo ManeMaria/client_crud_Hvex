@@ -1,0 +1,4 @@
+config/
+.elasticbeanstalk/
+ node_modules/
+ .env
