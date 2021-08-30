@@ -14,8 +14,6 @@ app.use(dataBase, (error, req, res, next) => {
   }});
 
 const clientRoute = require("./routes/client_routes");
-const index = require("./routes/index");
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.json({ type: "aplication/vnd.api+json" }));

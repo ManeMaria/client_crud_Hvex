@@ -1,5 +1,5 @@
 {
-  "name": "teste_Hvex_crud_Nodejs",
+  "name": "crudnode",
   "version": "1.0.0",
   "main": "server.js",
   "license": "MIT",
