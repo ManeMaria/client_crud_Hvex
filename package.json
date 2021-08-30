@@ -1,5 +1,5 @@
 {
-  "name": "CRUD-NODE",
+  "name": "teste_Hvex_crud_Nodejs",
   "version": "1.0.0",
   "main": "server.js",
   "license": "MIT",
@@ -12,10 +12,11 @@
     "eslint": "^7.19.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.12"
   },
   "dependencies": {
     "aws-sdk": "^2.842.0",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

@@ -1,45 +1,38 @@
-const express = require('express');
-// eslint-disable-next-line import/no-unresolved
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const morgan = require('morgan');
-const cors = require('cors');
-// const path = require('path');
-require('dotenv').config();
+const express = require("express");
+require("dotenv").config();
+const path = require('path');
+const morgan = require("morgan");
+const cors = require("cors");
+const dataBase = require('./config/dataBaseConnection');
+
 
 const app = express();
 
-// --> importar o arquivo database.js
-const localdatabase = require('./config/database');
+app.use(dataBase, (error, req, res, next) => {
+  if (error) {
+    next(error);
+  }});
 
-// --> conexão com a base de dados
-mongoose.Promise = global.Promise;
-mongoose.set('useFindAndModify', false);
-mongoose.connect(localdatabase.local.localURL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}, { useNewUrlParser: true }).then(() => {
-  console.log('a base foi conectada com sucesso');
-},
-(err) => {
-  console.log(err); // não está relatando o erro no console.
-  process.exit();
+const clientRoute = require("./routes/client_routes");
+const index = require("./routes/index");
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.json({ type: "aplication/vnd.api+json" }));
+//lib p/ visualizar as requisições.
+app.use(morgan("dev"));
+app.use(cors("*"));
+
+//linkagem com o front-end
+app.use('/',express.static('frontend'))
+app.all('/*',(req,res) =>{
+    res.sendFile( path.join( __dirname, '..','frontend', 'index.html' ) );
+})
+//rotas
+app.use("/client", clientRoute);
+//erro exepcionais
+app.use(function exceptionalErrosHandler(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).json(err);
 });
-
-//= => rotas
-// sconst index = require('./routes/index'); se der algum erro foi por essa alteração
-
-const funcionarioRoute = require('./routes/funcionario.routes');
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(bodyParser.json({ type: 'aplication/vnd.api+json' }));
-app.use(morgan('dev'));
-app.use(cors());
-
-// app.use('/api', index);
-app.get('/', (req, res) => {
-  res.send('tudo ok!');
-});
-app.use('/funcionarios', funcionarioRoute);
 module.exports = app;
