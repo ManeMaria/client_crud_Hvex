@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const ClientSchema = require("../models/Client_model");
+const ClientSchema = require("../models/client_model");
 const isEmpty = require("../util/functions/isEmpty");
 const bcrypt = require("bcrypt");
 
