@@ -21,13 +21,13 @@ app.use(express.json({ type: "aplication/vnd.api+json" }));
 app.use(morgan("dev"));
 app.use(cors("*"));
 
-//linkagem com o front-end
-app.use('/',express.static('frontend'))
-app.all('/*',(req,res) =>{
-    res.sendFile( path.join( __dirname, '..','frontend', 'index.html' ) );
-})
 //rotas
 app.use("/client", clientRoute);
+//linkagem com o front-end views
+app.use('/',express.static('public'))
+app.all('/*',(req,res) =>{
+    res.sendFile( path.join( __dirname, '..','public', 'index.html' ) );
+});
 //erro exepcionais
 app.use(function exceptionalErrosHandler(err, req, res, next) {
   console.error(err.stack);
