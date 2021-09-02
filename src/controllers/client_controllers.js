@@ -70,7 +70,7 @@ exports.create = async (req, res, next) => {
 // lista todos os clientes
 exports.findAll = async (req, res, next) => {
   try {
-    const Clients = await ClientSchema.find({});
+    const Clients = await ClientSchema.find({}).sort({ "createdAt" : -1 });
     let clientData = [];
     for(key of Clients){
       const { _id, name, userName, updatedAt } = key;
@@ -206,7 +206,6 @@ exports.uptade = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
   const { id } = req.params;
-  console.log('id :>> ', id);
   //verifica se há id nos params
   if (!id) {
     res.status(401).json({ message: "campo de id vazio" });
