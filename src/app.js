@@ -24,7 +24,7 @@ app.use(cors("*"));
 //rotas
 app.use("/client", clientRoute);
 //linkagem com o front-end views
-app.use('/',express.static('public'))
+app.use('/',express.static('public'));
 app.all('/*',(req,res) =>{
     res.sendFile( path.join( __dirname, '..','public', 'index.html' ) );
 });
