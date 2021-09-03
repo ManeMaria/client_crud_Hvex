@@ -12,6 +12,7 @@ exports.create = async (req, res, next) => {
     //verifica se os campos estão vazios
     if (!name.trim() || !userName.trim() || !password.trim()) {
       res.status(401).json({
+        clientes: [],
         status: false,
         message: "campos vazios",
       });
@@ -24,6 +25,7 @@ exports.create = async (req, res, next) => {
       typeof password !== "string"
     ) {
       res.status(401).json({
+        clientes: [],
         status: false,
         message: "apenas texto",
       });
@@ -32,6 +34,7 @@ exports.create = async (req, res, next) => {
     //verifica se houve algum problema na criptografia
     if (!hash) {
       res.status(500).json({
+        clientes: [],
         status: false,
         message: error.message,
       });
@@ -46,7 +49,9 @@ exports.create = async (req, res, next) => {
 
     //verifica a resposta do bd
     if (isEmpty(newClient)) {
-      res.status(500).json({ message: "erro ao cadastrar o cliente" });
+      res
+        .status(500)
+        .json({ clientes: [], message: "erro ao cadastrar o cliente" });
     } else {
       const { _id, name, userName, updatedAt } = newClient;
       //exibe para o cliente, se salvo
@@ -59,7 +64,7 @@ exports.create = async (req, res, next) => {
       };
       res
         .status(200)
-        .json({ usuario: clientData, message: "cadastro feito com sucesso" });
+        .json({ clientes: clientData, message: "cadastro feito com sucesso" });
     }
   } catch (err) {
     next(err);
@@ -70,9 +75,9 @@ exports.create = async (req, res, next) => {
 // lista todos os clientes
 exports.findAll = async (req, res, next) => {
   try {
-    const Clients = await ClientSchema.find({}).sort({ "createdAt" : -1 });
+    const Clients = await ClientSchema.find({}).sort({ createdAt: -1 });
     let clientData = [];
-    for(key of Clients){
+    for (key of Clients) {
       const { _id, name, userName, updatedAt } = key;
 
       clientData.push({
@@ -80,9 +85,9 @@ exports.findAll = async (req, res, next) => {
         nome: name,
         nomeDeUsuario: userName,
         ultimoAcesso: updatedAt, //PROCURAR UM LIB PRA CONVERTER
-      })
+      });
     }
-    res.status(200).json({clientes: clientData});
+    res.status(200).json({ clientes: clientData });
   } catch (err) {
     next(err);
     res.status(500).json({ message: err.message });
@@ -93,29 +98,36 @@ exports.findById = async (req, res, next) => {
   const { id } = req.params;
 
   if (!id) {
-    res.status(401).json({ message: "campo de id vazio" });
+    res.status(401).json({ clientes: [], message: "campo de id vazio" });
     return;
   }
   try {
     const client = await ClientSchema.findById(id);
-    if (isEmpty(client)) {
-      res.status(404).json({ message: "cliente não encontrado :c" });
+    console.log('client :>> ', client);
+    if (!client) {
+      res
+        .status(404)
+        .json({ clientes: [], message: "cliente não encontrado :c" });
     } else {
       const {
         _id: identificador,
         name: nome,
         userName: nomeDeUsuario,
+        updatedAt: ultimoAcesso,
       } = client;
-      const clientDada = {
-        identificador,
-        nome,
-        nomeDeUsuario,
-      };
-      res.status(200).json(clientDada);
+      const clientDada = [
+        {
+          identificador,
+          nome,
+          nomeDeUsuario,
+          ultimoAcesso,
+        },
+      ];
+      res.status(200).json({ clientes: clientDada });
     }
   } catch (error) {
     next(error);
-    res.status(500).json(error.message);
+    res.status(500).json({ clientes: [], message: error.message });
   }
 };
 
@@ -124,7 +136,7 @@ exports.uptade = async (req, res, next) => {
   const { id } = req.params;
   const { name, userName, password } = req.body;
   if (!id) {
-    res.status(401).json({ message: "campo de id vazio" });
+    res.status(401).json({ clientes: [], message: "campo de id vazio" });
     return;
   }
   //verifica se são diferentes de string
@@ -134,6 +146,7 @@ exports.uptade = async (req, res, next) => {
     typeof password !== "string"
   ) {
     res.status(401).json({
+      clientes: [],
       status: false,
       message: "apenas texto",
     });
@@ -142,6 +155,7 @@ exports.uptade = async (req, res, next) => {
   //verifica se os campos estão vazios
   if (!name.trim() || !userName.trim() || !password.trim()) {
     res.status(401).json({
+      clientes: [],
       status: false,
       message: "campos vazios",
     });
@@ -173,7 +187,10 @@ exports.uptade = async (req, res, next) => {
     if (isEmpty(ClientAtualizado)) {
       res
         .status(500)
-        .json({ message: "erro ao atualizar os dados do cliente" });
+        .json({
+          clientes: [],
+          message: "erro ao atualizar os dados do cliente",
+        });
     } else {
       const { _id, name, userName, updatedAt } = ClientAtualizado;
       //exibe para o cliente, se salvo
@@ -184,12 +201,10 @@ exports.uptade = async (req, res, next) => {
         nomeDeUsuario: userName,
         ultimoAcesso: updatedAt, //PROCURAR UM LIB PRA CONVERTER
       };
-      res
-        .status(200)
-        .json({
-          usuario: clientData,
-          message: "atualização realizada com sucesso",
-        });
+      res.status(200).json({
+        clientes: clientData,
+        message: "atualização realizada com sucesso",
+      });
     }
   } catch (error) {
     if (error.kind === "objectId") {
@@ -199,6 +214,7 @@ exports.uptade = async (req, res, next) => {
     }
     next(error);
     res.status(500).json({
+      clientes: [],
       message: `dados do funcionário ${id} não podem ser atualizados`,
     });
   }
@@ -218,24 +234,27 @@ exports.delete = async (req, res, next) => {
     if (isEmpty(clientDeleted)) {
       res
         .status(404)
-        .json({ message: `o cliente de identificador ${id} não foi encontrado(a)` });
+        .json({
+          message: `o cliente de identificador ${id} não foi encontrado(a)`,
+        });
       return;
     }
     //atualiza caso suceeso
     res.status(200).json({
       message: `o client de identificador ${id} foi deletado com sucesso`,
-    
     });
   } catch (error) {
     next(error);
-      //verifica em casos de erro excepcionais: conexão, etc.
+    //verifica em casos de erro excepcionais: conexão, etc.
     if (error.kind === "ObjectId") {
       res
         .status(404)
-        .json({ message: `o client de identificador ${id} não foi encontrado(a)` });
+        .json({
+          message: `o client de identificador ${id} não foi encontrado(a)`,
+        });
     }
-    res
-      .status(500)
-      .json({ message: `Erro ao excluir o cliente ${id}`});
+    res.status(500).json({
+      message: `Erro ao excluir o cliente ${id}`,
+    });
   }
 };
