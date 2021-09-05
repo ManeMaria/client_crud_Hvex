@@ -1,4 +1,3 @@
-# client_crud_Hvex
-api rest construída em nodejs, expressjs e outros.
+# Projeto crud Hvex
+> clone este repositório através do link
 
-linnk: https://clientcrudcvexv1.herokuapp.com/
