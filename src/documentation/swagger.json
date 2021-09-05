@@ -53,7 +53,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "OK",
+                        "description": "criado com sucesso",
                         "content": {
                             "application/json": {
                                 "schema": {
