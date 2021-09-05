@@ -18,8 +18,8 @@
 
 #### Primeiros passos
 1. Crie uma pasta com o mesmo nome do repositório
-2. execute o comando "git clone https://github.com/ManeMaria/client_crud_Hvex.git"
-3. após e a clonagem, abra o prompt na pasta do arquivo e execute yarn ou npm instal no prompt
+2. execute o comando ``` git clone https://github.com/ManeMaria/client_crud_Hvex.git ```
+3. após e a clonagem, abra o prompt na pasta do arquivo e execute ``` yarn ``` ou ``` npm instal ```
 
 > o servidor de desenvolvimento está rodando na porta :8000
 
