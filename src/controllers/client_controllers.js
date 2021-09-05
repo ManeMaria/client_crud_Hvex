@@ -63,7 +63,7 @@ exports.create = async (req, res, next) => {
         ultimoAcesso: updatedAt, //PROCURAR UM LIB PRA CONVERTER
       };
       res
-        .status(200)
+        .status(201)
         .json({ clientes: clientData, message: "cadastro feito com sucesso" });
     }
   } catch (err) {
