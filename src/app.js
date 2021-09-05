@@ -1,20 +1,20 @@
-const express = require("express");
 require("dotenv").config();
+const express = require("express");
+const app = express();
 const path = require('path');
 const morgan = require("morgan");
 const cors = require("cors");
 const dataBase = require('./config/dataBaseConnection');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./documentation/swagger.json');
-
-const app = express();
+const clientRoute = require("./routes/client_routes");
 //documentação
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(dataBase, (error, req, res, next) => {
   if (error) {
     next(error);
   }});
-const clientRoute = require("./routes/client_routes");
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.json({ type: "aplication/vnd.api+json" }));
