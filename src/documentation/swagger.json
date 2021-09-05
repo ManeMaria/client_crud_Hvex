@@ -49,7 +49,6 @@
                             }
                         }
                     }
-
                 },
                 "responses": {
                     "201": {
@@ -116,7 +115,7 @@
                 "tags": [
                     "Client"
                 ],
-                "parameters":[ 
+                "parameters": [
                     {
                         "name": "id",
                         "in": "path",
@@ -191,18 +190,17 @@
                 ],
                 "parameters": [
                     {
-                     
-                      "description": "lista de clientes",
-                      "required": false,
-                      "schema": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "style": "simple"
+                        "description": "lista de clientes",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "simple"
                     }
-                  ],
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -215,7 +213,6 @@
                             }
                         }
                     },
-    
                     "500": {
                         "description": "erro interno do servidor - o status virá false",
                         "content": {
@@ -239,7 +236,6 @@
                     }
                 }
             }
-          
         },
         "/client/delete/{id}": {
             "delete": {
@@ -247,7 +243,7 @@
                 "tags": [
                     "Client"
                 ],
-                "parameters":[ 
+                "parameters": [
                     {
                         "name": "id",
                         "in": "path",
@@ -263,7 +259,9 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                       "message": "string"
+                                        "message": {
+                                            "type": "string"
+                                        }
                                     }
                                 }
                             }
@@ -320,7 +318,7 @@
                 "tags": [
                     "Client"
                 ],
-                "parameters":[ 
+                "parameters": [
                     {
                         "name": "id",
                         "in": "path",
@@ -334,7 +332,6 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-
                                     "name": {
                                         "type": "string"
                                     },
@@ -348,7 +345,6 @@
                             }
                         }
                     }
-
                 },
                 "responses": {
                     "200": {
@@ -409,9 +405,7 @@
                 }
             }
         }
-        
     },
-    
     "components": {
         "schemas": {
             "Client": {
