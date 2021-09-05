@@ -22,6 +22,7 @@
 3. após e a clonagem, abra o prompt na pasta do arquivo e execute yarn ou npm instal no prompt
 
 > o servidor de desenvolvimento está rodando na porta :8000
+> ou acesse a aplicação em produção no link: https://clientcrudcvexv1.herokuapp.com
 
 **consulte a documentação da api através do link :** 
 https://clientcrudcvexv1.herokuapp.com/api-docs/#/Client/get_client_findAll
