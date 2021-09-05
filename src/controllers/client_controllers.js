@@ -84,7 +84,7 @@ exports.findAll = async (req, res, next) => {
         identificador: _id,
         nome: name,
         nomeDeUsuario: userName,
-        ultimoAcesso: updatedAt, //PROCURAR UM LIB PRA CONVERTER
+        ultimoAcesso: updatedAt,
       });
     }
     res.status(200).json({ clientes: clientData });
