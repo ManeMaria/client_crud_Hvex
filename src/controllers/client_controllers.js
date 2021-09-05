@@ -103,7 +103,7 @@ exports.findById = async (req, res, next) => {
   }
   try {
     const client = await ClientSchema.findById(id);
-    console.log('client :>> ', client);
+
     if (!client) {
       res
         .status(404)
@@ -123,7 +123,7 @@ exports.findById = async (req, res, next) => {
           ultimoAcesso,
         },
       ];
-      res.status(200).json({ clientes: clientDada });
+      res.status(200).json({ clientes: clientDada , message:"cliente encontrado"});
     }
   } catch (error) {
     next(error);

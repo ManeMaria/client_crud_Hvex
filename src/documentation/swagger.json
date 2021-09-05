@@ -1,0 +1,449 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Api de manipulação de dados de clientes",
+        "description": "Este é um servidor de manipulação de dados de clientes",
+        "contact": {
+            "name": "César Damasceno",
+            "email": "mirandacesar598@gmail.com"
+        },
+        "license": {
+            "name": "MIT"
+        },
+        "version": "1.0.1"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "servidor de desenvolvimento"
+        },
+        {
+            "url": "https://clientcrudcvexv1.herokuapp.com/",
+            "description": "servidor de produção"
+        }
+    ],
+    "paths": {
+        "/client/create": {
+            "post": {
+                "summary": "Cadastro de clientes",
+                "description": "Esta rota será responsável pelo cadastro dos clientes",
+                "tags": [
+                    "Client"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "userName": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Client"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "não autorizado - o status virá false",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "clientes": {
+                                            "items": {
+                                                "type": ""
+                                            }
+                                        },
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "erro interno do servidor - o status virá false",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "clientes": {
+                                            "items": {}
+                                        },
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/client/search/{id}": {
+            "get": {
+                "summary": "Busca do cliente através do id",
+                "tags": [
+                    "Client"
+                ],
+                "parameters":[ 
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id (identificador) do cliente para busca",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Client"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "não encontrado - o status virá false",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "clientes": {
+                                            "items": {
+                                                "type": {}
+                                            }
+                                        },
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "erro interno do servidor - o status virá false",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "clientes": {
+                                            "items": {}
+                                        },
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/client/findAll": {
+            "get": {
+                "summary": "Busca todos os clientes",
+                "tags": [
+                    "Client"
+                ],
+                "parameters": [
+                    {
+                     
+                      "description": "lista de clientes",
+                      "required": false,
+                      "schema": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "style": "simple"
+                    }
+                  ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Client"
+                                }
+                            }
+                        }
+                    },
+    
+                    "500": {
+                        "description": "erro interno do servidor - o status virá false",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "clientes": {
+                                            "items": {}
+                                        },
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+          
+        },
+        "/client/delete/{id}": {
+            "delete": {
+                "summary": "Busca o cliente e deleta-o através do id",
+                "tags": [
+                    "Client"
+                ],
+                "parameters":[ 
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id (identificador) do cliente para busca",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                       "message": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "não encontrado - o status virá false",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "clientes": {
+                                            "items": {}
+                                        },
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "erro interno do servidor - o status virá false",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "clientes": {
+                                            "items": {}
+                                        },
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/client/update/{id}": {
+            "put": {
+                "summary": "Atualização dos dads do  clientes",
+                "tags": [
+                    "Client"
+                ],
+                "parameters":[ 
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id (identificador) do cliente para busca",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "userName": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Client"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "não autorizado - o status virá false",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "clientes": {
+                                            "items": {
+                                                "type": ""
+                                            }
+                                        },
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "erro interno do servidor - o status virá false",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "clientes": {
+                                            "items": {}
+                                        },
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+    },
+    
+    "components": {
+        "schemas": {
+            "Client": {
+                "type": "object",
+                "properties": {
+                    "clientes": {
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "identificador": {
+                                    "type": "number"
+                                },
+                                "nome": {
+                                    "type": "string"
+                                },
+                                "senha": {
+                                    "type": "string"
+                                },
+                                "nomeDeUsuaruio": {
+                                    "type": "string"
+                                },
+                                "ultimoAcesso": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
